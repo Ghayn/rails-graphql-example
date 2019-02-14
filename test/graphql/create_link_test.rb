@@ -1,6 +1,12 @@
 class Mutations::CreateLinkTest < ActiveSupport::TestCase
   def perform(**args)
-    Mutations::CreateLink.new(object: nil, context: {}).resolve(args)
+    Mutations::CreateLink.new(object: nil, context: {
+      current_user: create_user
+    }).resolve(args)
+  end
+
+  def create_user
+    User.create(name: 'user', email: 'user@example.com', password: 'password')
   end
 
   test 'create a new link' do
